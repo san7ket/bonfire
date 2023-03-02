@@ -32,6 +32,7 @@ set -e
 : "${IQE_PLUGINS:='""'}"
 : "${IQE_ENV:=clowder_smoke}"
 : "${IQE_SELENIUM:=false}"
+: "${IQE_PARALLEL_WORKER_COUNT:='""'}"
 
 
 # minio client is used to fetch test artifacts from minio in the ephemeral ns
@@ -51,6 +52,7 @@ if [ "$IQE_SELENIUM" = "true" ]; then
     SELENIUM_ARG=" --selenium "
 fi
 
+
 # Invoke the CJI using the options set via env vars
 set -x
 POD=$(
@@ -64,6 +66,7 @@ POD=$(
     --plugins "$IQE_PLUGINS" \
     --env "$IQE_ENV" \
     --cji-name $CJI_NAME \
+    --iqe-parallel-worker-count "$IQE_PARALLEL_WORKER_COUNT" \
     $SELENIUM_ARG \
     --namespace $NAMESPACE)
 set +x

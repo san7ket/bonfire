@@ -632,6 +632,12 @@ _iqe_cji_process_options = [
         type=str,
         default="",
     ),
+    click.option(
+        "--iqe-parallel-worker-count",
+        help="iqe --iqe-parallel-worker-count count",
+        type=str,
+        default="2",
+    ),
     _local_option,
 ]
 
@@ -1264,7 +1270,8 @@ def _cmd_deploy_clowdenv(
     click.echo(namespace)
 
 
-@main.command("process-iqe-cji")
+@main.command("process-"
+              "-cji")
 @options(_iqe_cji_process_options)
 def _cmd_process_iqe_cji(
     clowd_app_name,
@@ -1281,6 +1288,7 @@ def _cmd_process_iqe_cji(
     plugins,
     local,
     selenium,
+    iqe_parallel_worker_count,
 ):
     """Process IQE ClowdJobInvocation template and print output"""
     cji_config = process_iqe_cji(
@@ -1298,6 +1306,7 @@ def _cmd_process_iqe_cji(
         plugins,
         local,
         selenium,
+        iqe_parallel_worker_count
     )
     print(json.dumps(cji_config, indent=2))
 
@@ -1330,6 +1339,7 @@ def _cmd_deploy_iqe_cji(
     selenium,
     pool,
     force,
+    iqe_parallel_worker_count,
 ):
     """Process IQE CJI template, apply it, and wait for it to start running."""
     if not has_clowder():
@@ -1352,6 +1362,7 @@ def _cmd_deploy_iqe_cji(
         plugins,
         local,
         selenium,
+        iqe_parallel_worker_count,
     )
 
     log.debug("processed CJI config:\n%s", cji_config)

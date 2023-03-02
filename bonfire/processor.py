@@ -140,6 +140,7 @@ def process_iqe_cji(
     plugins="",
     local=True,
     selenium=False,
+    iqe_parallel_worker_count=None,
 ):
     log.info("processing IQE ClowdJobInvocation")
 
@@ -156,6 +157,7 @@ def process_iqe_cji(
     test_importance = test_importance.split(",") if test_importance else []
 
     params = dict()
+    params["IQE_PARALLEL_WORKER_COUNT"] = iqe_parallel_worker_count
     params["DEBUG"] = str(debug).lower()
     params["MARKER"] = marker
     params["FILTER"] = filter
